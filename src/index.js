@@ -1,32 +1,22 @@
 import Phaser from "phaser";
-import logoImg from "./assets/logo.png";
+import { SceneA } from "./scenes/game";
+import { Preloader } from "./scenes/preloader";
+import { Demo } from "./scenes/board";
+import BoardPlugin from './plugins/board-plugin.js';
 
-const config = {
+var config = {
   type: Phaser.AUTO,
-  parent: "phaser-example",
+  parent: 'phaser-example',
   width: 800,
   height: 600,
-  scene: {
-    preload: preload,
-    create: create
+  scene: Demo,
+  plugins: {
+      scene: [{
+          key: 'rexBoard',
+          plugin: BoardPlugin,
+          mapping: 'rexBoard'
+      }]
   }
 };
 
 const game = new Phaser.Game(config);
-
-function preload() {
-  this.load.image("logo", logoImg);
-}
-
-function create() {
-  const logo = this.add.image(400, 150, "logo");
-
-  this.tweens.add({
-    targets: logo,
-    y: 450,
-    duration: 2000,
-    ease: "Power2",
-    yoyo: true,
-    loop: -1
-  });
-}
